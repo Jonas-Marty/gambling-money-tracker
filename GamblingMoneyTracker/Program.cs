@@ -1,4 +1,5 @@
 using GamblingMoneyTracker.Data;
+using GamblingMoneyTracker.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var initializer = services.GetRequiredService<DbInitializer>();
+initializer.Run();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
