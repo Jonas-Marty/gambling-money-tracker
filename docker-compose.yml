@@ -1,0 +1,47 @@
+services:      
+  capitalmind_web:
+    build: .
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=capitalmind-proxy"
+      - "traefik.http.routers.capitalmind-router.rule=Host(`capitalmind.ch`) || Host(`www.capitalmind.ch`)"
+      - "traefik.http.routers.capitalmind-router.entrypoints=web"
+      - "traefik.http.routers.capitalmind-router.middlewares=https-redirect@file"
+      - "traefik.http.routers.capitalmind-router-s.rule=Host(`capitalmind.ch`) || Host(`www.capitalmind.ch`)"
+      - "traefik.http.routers.capitalmind-router-s.entrypoints=websecure"
+      - "traefik.http.routers.capitalmind-router-s.tls.certresolver=letsencrypt"
+      - "traefik.http.services.capitalmind-service.loadbalancer.server.port=5000"
+    environment:
+      - IS_DOCKER=true
+      - ASPNETCORE_URLS=http://*:5000
+      - ASPNETCORE_HOST_TYPE=Proxy
+      - TOKEN=ASDGFHRTHWEFSDGFHDTHGJIOPOLGHGAYVFWQERZESBFGJDSDGSFGSDGSRSGDGJZFZRDFGJZUTEAEQE3423GSDG34
+    volumes:
+      - ./app:/app
+    depends_on:
+      - capitalmind_mssql
+    networks:
+      - capitalmind
+      - capitalmind-proxy
+    expose:
+      - "5000"
+
+  capitalmind_mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
+    ports:
+      - 1433:1433
+    env_file:
+      capitalmind-mssql.env
+    volumes:
+      - ./mssql:/var/opt/mssql
+    networks:
+      - capitalmind
+
+networks:
+  capitalmind:
+    name: capitalmind
+  capitalmind-proxy:
+    name: capitalmind-proxy
+    external: true

@@ -1,0 +1,24 @@
+﻿@page
+@model GamblingMoneyTracker.Pages.Players.CreateTransactionModel
+@{
+    ViewData["Title"] = "Transactions";
+}
+
+<a href="/Players/Transaction?playerId=@Model.Player.PlayerId" class="btn btn-warning">Zurück</a>
+
+
+<h2>Add Transaction for player @Model.Player.Name</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label>Betrag (minus erlaubt)</label>
+        <input asp-for="Transaction.Amount" class="form-control" />
+        <span asp-validation-for="Transaction.Amount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Grund</label>
+        <input asp-for="Transaction.Reason" class="form-control" />
+        <span asp-validation-for="Transaction.Reason" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

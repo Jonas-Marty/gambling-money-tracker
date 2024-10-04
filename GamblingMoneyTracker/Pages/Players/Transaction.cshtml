@@ -1,0 +1,33 @@
+﻿@page
+@model GamblingMoneyTracker.Pages.Players.TransactionModel
+@{
+    ViewData["Title"] = "Transactions";
+}
+
+<a href="/Players/Indes" class="btn btn-warning">Zurück</a>
+<br />
+<h2>Transaktionen von @Model.Player.Name</h2>
+
+<a href="/Players/CreateTransaction?playerId=@Model.Player.PlayerId" class="btn btn-primary">Transaktion hinzufügen</a>
+
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Datum</th>
+        <th>Wert</th>
+        <th>Grund</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var player in Model.Player.Transactions.OrderBy(x => x.TimeStamp))
+    {
+        <tr>
+            <td>@player.TimeStamp.ToString("yyyy.MM.dd HH:mm")</td>
+            <td>@player.Amount</td>
+            <td>@player.Reason</td>
+        </tr>
+    }
+    </tbody>
+</table>

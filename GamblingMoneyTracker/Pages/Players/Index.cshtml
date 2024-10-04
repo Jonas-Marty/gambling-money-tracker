@@ -1,0 +1,29 @@
+﻿@page
+@model GamblingMoneyTracker.Pages.Players.IndexModel
+@{
+    ViewData["Title"] = "Transaction List";
+}
+
+<h2>Kurs aspiranten</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Play Money</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var player in Model.Players)
+    {
+        <tr>
+            <td>@player.Name</td>
+            <td>@player.PlayMoney</td>
+            <td>
+                <a href="/Players/Transaction?playerId=@player.PlayerId" class="btn btn-warning">Transaktionen</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

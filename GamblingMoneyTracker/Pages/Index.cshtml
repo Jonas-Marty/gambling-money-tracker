@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Play Money</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var player in Model.Players)
+    {
+        <tr>
+            <td>@player.Name</td>
+            <td>@player.PlayMoney</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    setTimeout(function(){
+        window.location.reload(1);
+    }, 5000);
+</script>
