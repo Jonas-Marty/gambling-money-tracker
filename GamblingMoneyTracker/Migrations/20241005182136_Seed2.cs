@@ -10,7 +10,7 @@ namespace GamblingMoneyTracker.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("DELETE * FROM Players");
+            migrationBuilder.Sql("DELETE FROM Players");
             migrationBuilder.InsertData("Players", ["Name", "PlayMoney"], ["Migros", 0]);
             migrationBuilder.InsertData("Players", ["Name", "PlayMoney"], ["Nestle", 0]);
             migrationBuilder.InsertData("Players", ["Name", "PlayMoney"], ["Kambli", 0]);
